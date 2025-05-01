@@ -94,15 +94,17 @@
                 },
             ];
 
-            let currentIndex = 0;
+            let currentIndex = 0; // Починаємо з першої картинки
 
-            function changeCapybara() {
-                currentIndex = (currentIndex + 1) % data.length;
-                const img = document.getElementById('capybaraImage');
-                const greeting = document.getElementById('greeting');
-                img.src = data[currentIndex].img;
-                greeting.innerHTML = data[currentIndex].text;
-            }
+// Встановлюємо її одразу:
+img.src = data[currentIndex].img;
+greeting.innerHTML = data[currentIndex].text;
+
+function changeCapybara() {
+    currentIndex = (currentIndex + 1) % data.length;
+    img.src = data[currentIndex].img;
+    greeting.innerHTML = data[currentIndex].text;
+}
         </script>
     </body>
 </html>
