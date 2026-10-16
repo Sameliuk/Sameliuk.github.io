@@ -182,15 +182,14 @@
 
 <script>
 /* ===== НАЛАШТУВАННЯ (заповніть після реєстрації сервісів) ===== */
-// Tawk.to: Administration → Channels → Chat Widget → Direct Chat Link: tawk.to/chat/PROPERTY_ID/WIDGET_ID
-var TAWK_PROPERTY_ID = "";   // наприклад "65f1a2b3c4d5e6f7a8b9c0d1"
-var TAWK_WIDGET_ID   = "";   // наприклад "1hq2w3e4r"
+// Tidio: ключ із коду віджета <script src="//code.tidio.co/КЛЮЧ.js">
+var TIDIO_KEY = "vpvlgnkwobplguwrmqbhygupkfsqbbn0";
 // Microsoft Clarity: Project ID (необов'язково)
 var CLARITY_ID = "";
 /* ============================================================== */
 
 var state = {name:"",grade:"",subject:""};
-var tawkOn = !!(TAWK_PROPERTY_ID && TAWK_WIDGET_ID);
+var liveChat = !!(TAWK_PROPERTY_ID && TAWK_WIDGET_ID);
 var pending = [];   // зображення, прикріплені, але ще не надіслані (демо-чат)
 
 function $(id){return document.getElementById(id)}
@@ -212,8 +211,8 @@ $("theme").addEventListener("click",function(){
 function show(s){
   ["home","chat","progress"].forEach(function(x){$("s-"+x).classList.toggle("active",x===s)});
   document.querySelectorAll("nav button").forEach(function(b){b.classList.toggle("on",b.dataset.s===s)});
-  if(s==="chat" && tawkOn && window.Tawk_API && Tawk_API.maximize){Tawk_API.maximize()}
-  if(s!=="chat" && tawkOn && window.Tawk_API && Tawk_API.minimize){Tawk_API.minimize()}
+  if(s==="chat" && liveChat && window.Tawk_API && Tawk_API.maximize){Tawk_API.maximize()}
+  if(s!=="chat" && liveChat && window.Tawk_API && Tawk_API.minimize){Tawk_API.minimize()}
 }
 function pick(groupId,key){
   document.querySelectorAll("#"+groupId+" .chip").forEach(function(c){
@@ -331,7 +330,7 @@ function buildComposer(){
 $("start").addEventListener("click",function(){
   $("nav").classList.remove("hidden");
   show("chat");
-  if(tawkOn){
+  if(liveChat){
     $("msgs").classList.add("hidden"); $("tawk-box").classList.remove("hidden");
     loadTawk();
   } else {
