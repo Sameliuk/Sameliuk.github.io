@@ -151,10 +151,10 @@
     <!-- 2. ЧАТ -->
     <section class="screen" id="s-chat" style="height:100%">
       <div id="chat">
-        <div class="demo hidden" id="demo">Демо-режим: чат оператора не підключено (див. TAWK_ID у коді). Повідомлення нікуди не надсилаються.</div>
+        <div class="demo hidden" id="demo">Демо-режим: чат оператора не підключено (див. TIDIO_KEY у коді). Повідомлення нікуди не надсилаються.</div>
         <div class="msgs" id="msgs"></div>
         <div id="tawk-box" class="hidden">
-          <div class="empty"><span>💬</span>Чат тьютора відкрито.<br>Надішли завдання й свою відповідь. Фото додавай кнопкою 📎 у вікні чату.
+          <div class="empty"><span>💬</span>Чат тьютора відкрито.<br>Надішли завдання й свою відповідь. Фото додавай у вікні чату кнопкою вкладення.
             <button class="btn" id="reopen">Відкрити чат</button></div>
         </div>
       </div>
@@ -189,7 +189,7 @@ var CLARITY_ID = "";
 /* ============================================================== */
 
 var state = {name:"",grade:"",subject:""};
-var liveChat = !!(TAWK_PROPERTY_ID && TAWK_WIDGET_ID);
+var liveChat = !!TIDIO_KEY;
 var pending = [];   // зображення, прикріплені, але ще не надіслані (демо-чат)
 
 function $(id){return document.getElementById(id)}
@@ -211,8 +211,8 @@ $("theme").addEventListener("click",function(){
 function show(s){
   ["home","chat","progress"].forEach(function(x){$("s-"+x).classList.toggle("active",x===s)});
   document.querySelectorAll("nav button").forEach(function(b){b.classList.toggle("on",b.dataset.s===s)});
-  if(s==="chat" && liveChat && window.Tawk_API && Tawk_API.maximize){Tawk_API.maximize()}
-  if(s!=="chat" && liveChat && window.Tawk_API && Tawk_API.minimize){Tawk_API.minimize()}
+  if(s==="chat" && liveChat && window.tidioChatApi){tidioChatApi.show();tidioChatApi.open()}
+  if(s!=="chat" && liveChat && window.tidioChatApi){tidioChatApi.close();tidioChatApi.hide()}
 }
 function pick(groupId,key){
   document.querySelectorAll("#"+groupId+" .chip").forEach(function(c){
@@ -226,17 +226,15 @@ function validate(){ $("start").disabled = !(state.name.trim() && state.grade &&
 $("name").addEventListener("input",function(e){state.name=e.target.value;validate()});
 pick("grade","grade"); pick("subject","subject");
 
-/* ----- Tawk.to (віджет має власну кнопку 📎 для файлів і фото) ----- */
-function loadTawk(){
-  window.Tawk_API = window.Tawk_API || {}; window.Tawk_LoadStart = new Date();
-  Tawk_API.onLoad = function(){
-    Tawk_API.setAttributes({name:state.name+" ("+state.grade+", "+state.subject+")"},function(){});
-    Tawk_API.maximize();
-  };
-  Tawk_API.customStyle = {visibility:{desktop:{position:"br",xOffset:20,yOffset:20},mobile:{position:"br",xOffset:0,yOffset:0}}};
+/* ----- Tidio (віджет завантажується після натискання «Почати») ----- */
+function loadTidio(){
+  document.addEventListener("tidioChat-ready",function(){
+    var api=window.tidioChatApi;
+    try{ api.setVisitorData({name:state.name+" ("+state.grade+", "+state.subject+")"}) }catch(e){}
+    api.show(); api.open();
+  },{once:true});
   var s=document.createElement("script"); s.async=true;
-  s.src="https://embed.tawk.to/"+TAWK_PROPERTY_ID+"/"+TAWK_WIDGET_ID;
-  s.charset="UTF-8"; s.setAttribute("crossorigin","*");
+  s.src="https://code.tidio.co/"+TIDIO_KEY+".js";
   document.head.appendChild(s);
 }
 
@@ -332,14 +330,14 @@ $("start").addEventListener("click",function(){
   show("chat");
   if(liveChat){
     $("msgs").classList.add("hidden"); $("tawk-box").classList.remove("hidden");
-    loadTawk();
+    loadTidio();
   } else {
     $("demo").classList.remove("hidden");
     buildComposer();
     addMsg("Привіт, "+state.name.trim()+"! 👋 Я тьютор EduMind з предмета «"+state.subject+"».\n\nНадішли завдання, яке не виходить (текстом або фото), і свою відповідь. Я поясню, де помилка, у форматі НМТ.","bot");
   }
 });
-$("reopen").addEventListener("click",function(){ if(window.Tawk_API&&Tawk_API.maximize) Tawk_API.maximize() });
+$("reopen").addEventListener("click",function(){ if(window.tidioChatApi){tidioChatApi.show();tidioChatApi.open()} });
 document.querySelectorAll("nav button").forEach(function(b){
   b.addEventListener("click",function(){
     show(b.dataset.s);
