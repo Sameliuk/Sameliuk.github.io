@@ -107,6 +107,8 @@
   document.documentElement.setAttribute("data-theme",t);
 })();
 </script>
+<!-- Tidio: скрипт підключений прямо в коді сторінки, щоб Tidio міг перевірити встановлення віджета -->
+<script src="https://code.tidio.co/vpvlgnkwobplguwrmqbhygupkfsqbbn0.js" async></script>
 </head>
 <body>
 <div id="app">
@@ -227,16 +229,17 @@ $("name").addEventListener("input",function(e){state.name=e.target.value;validat
 pick("grade","grade"); pick("subject","subject");
 
 /* ----- Tidio (віджет завантажується після натискання «Почати») ----- */
-function loadTidio(){
-  document.addEventListener("tidioChat-ready",function(){
-    var api=window.tidioChatApi;
-    try{ api.setVisitorData({name:state.name+" ("+state.grade+", "+state.subject+")"}) }catch(e){}
-    api.show(); api.open();
-  },{once:true});
-  var s=document.createElement("script"); s.async=true;
-  s.src="https://code.tidio.co/"+TIDIO_KEY+".js";
-  document.head.appendChild(s);
+var chatStarted=false;
+function openTidio(){
+  var api=window.tidioChatApi; if(!api) return;
+  try{ api.setVisitorData({name:state.name+" ("+state.grade+", "+state.subject+")"}) }catch(e){}
+  api.show(); api.open();
 }
+function onTidioReady(){
+  if(chatStarted){ openTidio() } else { try{ window.tidioChatApi.hide() }catch(e){} }
+}
+if(window.tidioChatApi){ onTidioReady() } else { document.addEventListener("tidioChat-ready",onTidioReady,{once:true}) }
+function loadTidio(){ chatStarted=true; openTidio(); }
 
 /* ----- Clarity ----- */
 if(CLARITY_ID){
