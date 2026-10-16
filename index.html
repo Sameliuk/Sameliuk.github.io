@@ -38,6 +38,16 @@
   header small{opacity:.85;font-size:12px}
   .beta{margin-left:auto;background:rgba(255,255,255,.18);padding:3px 9px;border-radius:99px;font-size:11px;font-weight:600}
   .theme{border:0;background:rgba(255,255,255,.18);color:#fff;width:34px;height:34px;border-radius:50%;font-size:16px;cursor:pointer}
+  /* верхні вкладки */
+  nav{display:flex;background:var(--card);border-bottom:1px solid var(--line);flex-shrink:0}
+  nav button{flex:1;padding:9px 2px 8px;border:0;border-bottom:3px solid transparent;background:none;font-size:12px;color:var(--muted);cursor:pointer}
+  nav button span{display:block;font-size:19px;margin-bottom:1px}
+  nav button.on{color:var(--brand-text);font-weight:700;border-bottom-color:var(--brand)}
+  /* контекст: клас і предмет */
+  .ctx{display:flex;gap:8px;padding:10px 14px;background:var(--bg);border-bottom:1px solid var(--line);flex-shrink:0}
+  .ctx label{flex:1;margin:0;font-size:11px;font-weight:600;color:var(--muted)}
+  .ctx select{margin-top:3px;padding:9px 10px;font-size:14px}
+  .ctx label:last-child{flex:2}
   main{flex:1;overflow-y:auto;padding:18px}
   .screen{display:none}.screen.active{display:block}
   .hero h2{font-size:25px;line-height:1.2;margin-bottom:10px}
@@ -49,14 +59,13 @@
   .benefit div{font-size:13px;color:var(--muted);line-height:1.35}
   .card{background:var(--card);border-radius:16px;padding:16px;border:1px solid var(--line)}
   label{display:block;font-size:13px;font-weight:600;margin:12px 0 6px}
-  input[type=text]{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;font-size:16px;background:var(--input);color:var(--text)}
+  input[type=text],select{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;font-size:16px;background:var(--input);color:var(--text)}
+  select{appearance:auto}
   input::placeholder{color:var(--muted)}
-  input:focus{outline:2px solid var(--brand);outline-offset:-1px}
-  .chips{display:flex;flex-wrap:wrap;gap:8px}
-  .chip{padding:9px 14px;border-radius:99px;border:1px solid var(--line);background:var(--input);color:var(--text);font-size:14px;cursor:pointer;user-select:none}
-  .chip.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+  input:focus,select:focus{outline:2px solid var(--brand);outline-offset:-1px}
   .btn{width:100%;margin-top:16px;padding:14px;border:0;border-radius:14px;background:var(--brand);color:#fff;font-size:16px;font-weight:700;cursor:pointer}
   .btn:disabled{background:var(--btn-dis);cursor:not-allowed;color:#fff;opacity:.85}
+  .btn.ghost{background:var(--input);color:var(--brand-text);border:1px solid var(--line);font-size:14px;padding:10px;margin-top:12px}
   .note{font-size:12px;color:var(--muted);text-align:center;margin-top:10px;line-height:1.4}
   /* chat */
   #chat{display:flex;flex-direction:column;height:100%}
@@ -66,6 +75,7 @@
   .m.me{background:var(--brand);color:#fff;border-bottom-right-radius:4px;align-self:flex-end}
   .m img{display:block;max-width:100%;max-height:260px;border-radius:10px;margin-bottom:6px;cursor:zoom-in}
   .m img:last-child{margin-bottom:0}
+  .sys{align-self:center;font-size:12px;color:var(--muted);padding:2px 8px}
   .typing{align-self:flex-start;color:var(--muted);font-size:13px;padding:2px 6px}
   .demo{background:var(--demo-bg);color:var(--demo-text);font-size:12px;padding:8px 12px;border-radius:10px;margin-bottom:10px;line-height:1.35}
   .composer{display:flex;flex-direction:column;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:var(--card);border-top:1px solid var(--line);flex-shrink:0}
@@ -87,19 +97,26 @@
   .bar{height:9px;border-radius:99px;background:var(--bar);overflow:hidden}
   .bar i{display:block;height:100%;border-radius:99px}
   .tag{font-size:12px;font-weight:600}
-  nav{display:flex;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);flex-shrink:0}
-  nav button{flex:1;padding:11px 4px 9px;border:0;background:none;font-size:12px;color:var(--muted);cursor:pointer}
-  nav button span{display:block;font-size:20px;margin-bottom:1px}
-  nav button.on{color:var(--brand-text);font-weight:700}
   .empty{text-align:center;color:var(--muted);padding:36px 12px;font-size:14px;line-height:1.5}
   .empty span{font-size:42px;display:block;margin-bottom:8px}
   .hidden{display:none!important}
   details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 14px;margin-top:8px;font-size:14px}
   summary{font-weight:600;cursor:pointer}
-  details p{color:var(--muted);margin-top:7px;line-height:1.4;font-size:13px}
+  details p,details li{color:var(--muted);line-height:1.45;font-size:13px}
+  details p{margin-top:7px}
+  details ul{margin:8px 0 0 18px}
+  details li{margin-top:4px}
+  details b{color:var(--text)}
+  h2.t{font-size:20px;margin-bottom:4px}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:12px;line-height:1.4}
+  /* історія */
+  .hs{padding:0}
+  .hs summary{padding:11px 14px;list-style:none}
+  .hs summary small{display:block;font-weight:400;color:var(--muted);font-size:12px;margin-top:2px}
+  .hmsgs{display:flex;flex-direction:column;gap:6px;padding:4px 12px 12px}
+  .hmsgs .m{font-size:13px;max-width:92%}
 </style>
 <script>
-/* тема застосовується до відмальовування, щоб не було «спалаху» */
 (function(){
   var t=null;
   try{t=localStorage.getItem("edumind-theme")}catch(e){}
@@ -119,8 +136,28 @@
     <button class="theme" id="theme" aria-label="Змінити тему">🌙</button>
   </header>
 
+  <!-- верхні вкладки -->
+  <nav id="nav" class="hidden">
+    <button data-s="chat" class="on"><span>💬</span>Тьютор</button>
+    <button data-s="history"><span>🕘</span>Історія</button>
+    <button data-s="notes"><span>📚</span>Конспекти</button>
+    <button data-s="progress"><span>📊</span>Прогрес</button>
+  </nav>
+
+  <!-- клас і предмет -->
+  <div class="ctx hidden" id="ctx">
+    <label>Клас
+      <select id="ctx-grade">
+        <option value="9">9 клас</option><option value="10">10 клас</option><option value="11">11 клас</option>
+      </select>
+    </label>
+    <label>Предмет
+      <select id="ctx-subj"></select>
+    </label>
+  </div>
+
   <main id="main">
-    <!-- 1. ГОЛОВНА / ОНБОРДИНГ -->
+    <!-- ГОЛОВНА -->
     <section class="screen active" id="s-home">
       <div class="hero">
         <h2>Дізнайся свій реальний рівень готовності до НМТ</h2>
@@ -134,23 +171,19 @@
       <div class="card">
         <label for="name">Як тебе звати?</label>
         <input type="text" id="name" placeholder="Ім'я" autocomplete="given-name">
-        <label>Клас</label>
-        <div class="chips" id="grade">
-          <div class="chip" data-v="10">10 клас</div>
-          <div class="chip" data-v="11">11 клас</div>
-          <div class="chip" data-v="випускник">Випускник</div>
-        </div>
-        <label>З якого предмета почнемо?</label>
-        <div class="chips" id="subject">
-          <div class="chip" data-v="Фізика">Фізика</div>
-          <div class="chip" data-v="Математика">Математика</div>
-        </div>
+        <label for="grade">Клас</label>
+        <select id="grade">
+          <option value="" disabled selected>Обери клас</option>
+          <option value="9">9 клас</option><option value="10">10 клас</option><option value="11">11 клас</option>
+        </select>
+        <label for="subject">З якого предмета почнемо?</label>
+        <select id="subject"><option value="" disabled selected>Обери предмет</option></select>
         <button class="btn" id="start" disabled>Почати безкоштовно</button>
         <p class="note">Без реєстрації · Без картки · Працює з телефону</p>
       </div>
     </section>
 
-    <!-- 2. ЧАТ -->
+    <!-- ЧАТ -->
     <section class="screen" id="s-chat" style="height:100%">
       <div id="chat">
         <div class="demo hidden" id="demo">Демо-режим: чат оператора не підключено (див. TIDIO_KEY у коді). Повідомлення нікуди не надсилаються.</div>
@@ -162,10 +195,26 @@
       </div>
     </section>
 
-    <!-- 3. ПРОГРЕС -->
+    <!-- ІСТОРІЯ -->
+    <section class="screen" id="s-history">
+      <h2 class="t">Минулі діалоги</h2>
+      <p class="sub">Розмови зберігаються лише в цьому браузері. Нова розмова починається, коли ти змінюєш предмет чи клас.</p>
+      <div id="hist-list"></div>
+      <button class="btn ghost hidden" id="hist-clear">Очистити історію</button>
+    </section>
+
+    <!-- КОНСПЕКТИ -->
+    <section class="screen" id="s-notes">
+      <h2 class="t">Конспекти й матеріали</h2>
+      <p class="sub" id="notes-sub"></p>
+      <div id="notes-list"></div>
+      <p class="note" style="text-align:left">Це короткі нагадування, а не заміна підручника. Не знайшов тему? Напиши її тьютору в чаті.</p>
+    </section>
+
+    <!-- ПРОГРЕС -->
     <section class="screen" id="s-progress">
-      <h2 style="font-size:20px;margin-bottom:4px">Мій прогрес</h2>
-      <p style="color:var(--muted);font-size:13px;margin-bottom:12px">Картка оновлюється після кожних 5–10 завдань.</p>
+      <h2 class="t">Мій прогрес</h2>
+      <p class="sub">Картка оновлюється після кожних 5–10 завдань.</p>
       <div class="card" id="progress-card">
         <div class="empty"><span>📈</span>Тут з'явиться карта твоїх тем,<br>коли розв'яжеш перші завдання.</div>
       </div>
@@ -174,25 +223,61 @@
       <details><summary>Мої дані в безпеці?</summary><p>Ми зберігаємо лише ім'я, клас і твої завдання для дослідження. Ніяких оплат і даних батьків.</p></details>
     </section>
   </main>
-
-  <nav id="nav" class="hidden">
-    <button data-s="chat" class="on"><span>💬</span>Тьютор</button>
-    <button data-s="progress"><span>📊</span>Прогрес</button>
-  </nav>
 </div>
 <div id="lb"><img alt=""></div>
 
 <script>
-/* ===== НАЛАШТУВАННЯ (заповніть після реєстрації сервісів) ===== */
-// Tidio: ключ із коду віджета <script src="//code.tidio.co/КЛЮЧ.js">
+/* ===== НАЛАШТУВАННЯ ===== */
 var TIDIO_KEY = "vpvlgnkwobplguwrmqbhygupkfsqbbn0";
-// Microsoft Clarity: Project ID (необов'язково)
-var CLARITY_ID = "";
-/* ============================================================== */
+var CLARITY_ID = "";   // Microsoft Clarity Project ID (необов'язково)
+/* ========================= */
+
+var SUBJECTS = ["Фізика","Математика","Українська мова","Історія України","Англійська мова","Біологія","Хімія","Географія"];
+
+/* Конспекти: g — з якого класу тема доступна. Редагуйте під себе. */
+var NOTES = {
+ "Фізика":[
+  {g:9,t:"Рух і прискорення",h:"<ul><li><b>v = s / t</b> — рівномірний рух</li><li><b>a = (v − v₀) / t</b>; <b>v = v₀ + at</b></li><li><b>s = v₀t + at²/2</b></li><li>Вільне падіння: <b>g ≈ 10 м/с²</b></li></ul>"},
+  {g:9,t:"Закони Ньютона",h:"<ul><li>1-й: якщо сума сил = 0, тіло в спокої або рухається рівномірно прямолінійно</li><li>2-й: <b>a = F / m</b></li><li>3-й: <b>F₁₂ = −F₂₁</b></li><li>Сила тяжіння <b>F = mg</b>; пружності <b>F = kx</b>; тертя <b>F = μN</b></li></ul>"},
+  {g:9,t:"Робота, енергія, потужність",h:"<ul><li><b>A = F·s·cos α</b></li><li>Кінетична: <b>E = mv²/2</b>; потенціальна: <b>E = mgh</b></li><li>Без тертя: <b>E_k + E_p = const</b></li><li>Потужність <b>P = A / t</b></li></ul>"},
+  {g:9,t:"Закон Ома й електричні кола",h:"<ul><li><b>I = U / R</b></li><li>Послідовно: <b>R = R₁ + R₂</b>, струм однаковий</li><li>Паралельно: <b>1/R = 1/R₁ + 1/R₂</b>, напруга однакова</li><li><b>P = UI = I²R</b>; <b>Q = I²Rt</b></li></ul>"},
+  {g:10,t:"Газові закони",h:"<ul><li><b>pV = νRT</b>, R ≈ 8,31 Дж/(моль·К)</li><li>Ізотермічний: <b>pV = const</b></li><li>Ізобарний: <b>V/T = const</b></li><li>Ізохорний: <b>p/T = const</b></li><li>T (К) = t (°C) + 273</li></ul>"},
+  {g:10,t:"Закон Кулона",h:"<ul><li><b>F = k·q₁q₂ / r²</b>, k ≈ 9·10⁹ Н·м²/Кл²</li><li>Напруженість: <b>E = F / q</b></li><li>Однойменні заряди відштовхуються, різнойменні притягуються</li></ul>"}
+ ],
+ "Математика":[
+  {g:9,t:"Квадратні рівняння",h:"<ul><li>ax² + bx + c = 0; <b>D = b² − 4ac</b></li><li><b>x = (−b ± √D) / 2a</b></li><li>D &lt; 0: коренів немає; D = 0: один корінь</li><li>Теорема Вієта: <b>x₁ + x₂ = −b/a</b>, <b>x₁x₂ = c/a</b></li></ul>"},
+  {g:9,t:"Прогресії",h:"<ul><li>Арифметична: <b>aₙ = a₁ + (n−1)d</b>, <b>Sₙ = (a₁ + aₙ)·n / 2</b></li><li>Геометрична: <b>bₙ = b₁·q^(n−1)</b>, <b>Sₙ = b₁(qⁿ − 1)/(q − 1)</b></li><li>Нескінченно спадна (|q| &lt; 1): <b>S = b₁ / (1 − q)</b></li></ul>"},
+  {g:9,t:"Теорема Піфагора, площі",h:"<ul><li><b>c² = a² + b²</b> (прямокутний трикутник)</li><li>Площа трикутника <b>S = ½·a·h</b></li><li>Коло: <b>S = πr²</b>, довжина <b>C = 2πr</b></li></ul>"},
+  {g:10,t:"Тригонометрія",h:"<ul><li><b>sin²x + cos²x = 1</b></li><li><b>tg x = sin x / cos x</b></li><li><b>sin 2x = 2 sin x cos x</b></li><li><b>cos 2x = cos²x − sin²x</b></li><li>sin 30° = 1/2, sin 45° = √2/2, sin 60° = √3/2</li></ul>"},
+  {g:10,t:"Логарифми",h:"<ul><li><b>log_a(bc) = log_a b + log_a c</b></li><li><b>log_a(b/c) = log_a b − log_a c</b></li><li><b>log_a bᵏ = k·log_a b</b></li><li><b>a^(log_a b) = b</b></li><li>ОДЗ: основа &gt; 0 і ≠ 1; аргумент &gt; 0</li></ul>"},
+  {g:11,t:"Похідна",h:"<ul><li><b>(xⁿ)' = n·xⁿ⁻¹</b>; <b>(sin x)' = cos x</b>; <b>(cos x)' = −sin x</b></li><li><b>(eˣ)' = eˣ</b>; <b>(ln x)' = 1/x</b></li><li><b>(uv)' = u'v + uv'</b>; <b>(u/v)' = (u'v − uv') / v²</b></li><li>Дотична: <b>y = f(a) + f'(a)(x − a)</b></li><li>f'(x) &gt; 0 — функція зростає</li></ul>"}
+ ],
+ "Українська мова":[
+  {g:9,t:"Апостроф",h:"<p>Пишемо перед <b>я, ю, є, ї</b> після <b>б, п, в, м, ф, р</b> (м'ята, п'ять, подвір'я) та після префіксів на приголосний (з'їзд, під'їзд).</p>"},
+  {g:9,t:"Правопис «не»",h:"<ul><li><b>Окремо:</b> з дієсловами й дієприслівниками (не знаю, не читаючи); при протиставленні («не білий, а чорний»)</li><li><b>Разом:</b> якщо слово без «не» не вживається (ненавидіти) або замінюється синонімом (невеликий = малий)</li></ul>"}
+ ],
+ "Історія України":[
+  {g:9,t:"Київська Русь",h:"<ul><li>882 — Олег об'єднав Київ і Новгород</li><li>988 — хрещення Русі за Володимира Великого</li><li>Ярослав Мудрий — «Руська правда», розквіт держави</li><li>1240 — падіння Києва під ударами монголів</li></ul>"},
+  {g:10,t:"Українська революція 1917–1921",h:"<ul><li>Березень 1917 — створення Центральної Ради</li><li>20 листопада 1917 — III Універсал, проголошення УНР</li><li>22 січня 1918 — IV Універсал, незалежність УНР</li><li>22 січня 1919 — Акт Злуки УНР і ЗУНР</li></ul>"},
+  {g:11,t:"Незалежність України",h:"<ul><li>24 серпня 1991 — Акт проголошення незалежності</li><li>1 грудня 1991 — всеукраїнський референдум</li><li>28 червня 1996 — Конституція України</li></ul>"}
+ ],
+ "Англійська мова":[
+  {g:9,t:"Основні часи",h:"<ul><li><b>Present Simple</b> — звички, факти: <i>He works</i></li><li><b>Present Continuous</b> — зараз: <i>He is working</i></li><li><b>Present Perfect</b> — результат, досвід: <i>He has worked</i></li><li><b>Past Simple</b> — завершена дія в минулому: <i>He worked yesterday</i></li></ul>"},
+  {g:10,t:"Умовні речення",h:"<ul><li>Zero: If + present, present</li><li>First: If + present, <b>will</b> + inf</li><li>Second: If + past, <b>would</b> + inf</li><li>Third: If + past perfect, <b>would have</b> + V3</li></ul>"}
+ ],
+ "Біологія":[
+  {g:9,t:"Фотосинтез і дихання",h:"<ul><li>Фотосинтез (хлоропласти, світло): <b>6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂</b></li><li>Клітинне дихання (мітохондрії): <b>C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + АТФ</b></li></ul>"}
+ ],
+ "Хімія":[
+  {g:9,t:"Моль і кількість речовини",h:"<ul><li><b>n = m / M</b></li><li><b>N = n·N_A</b>, N_A ≈ 6,02·10²³ моль⁻¹</li><li>Гази (н. у.): <b>V = n·V_m</b>, V_m = 22,4 л/моль</li></ul>"}
+ ],
+ "Географія":[]
+};
 
 var state = {name:"",grade:"",subject:""};
 var liveChat = !!TIDIO_KEY;
-var pending = [];   // зображення, прикріплені, але ще не надіслані (демо-чат)
+var pending = [];
+var started = false;
 
 function $(id){return document.getElementById(id)}
 
@@ -209,37 +294,119 @@ $("theme").addEventListener("click",function(){
   try{localStorage.setItem("edumind-theme",t)}catch(e){}
 });
 
-/* ----- навігація ----- */
-function show(s){
-  ["home","chat","progress"].forEach(function(x){$("s-"+x).classList.toggle("active",x===s)});
-  document.querySelectorAll("nav button").forEach(function(b){b.classList.toggle("on",b.dataset.s===s)});
-  if(s==="chat" && liveChat && window.tidioChatApi){tidioChatApi.show();tidioChatApi.open()}
-  if(s!=="chat" && liveChat && window.tidioChatApi){tidioChatApi.close();tidioChatApi.hide()}
+/* ----- списки предметів ----- */
+SUBJECTS.forEach(function(s){
+  [$("subject"),$("ctx-subj")].forEach(function(sel){
+    var o=document.createElement("option"); o.value=s; o.textContent=s; sel.appendChild(o);
+  });
+});
+
+/* ----- сесії (історія діалогів) ----- */
+function loadSessions(){ try{ return JSON.parse(localStorage.getItem("edumind-sessions")||"[]") }catch(e){ return [] } }
+function saveSessions(){ try{ localStorage.setItem("edumind-sessions",JSON.stringify(sessions.slice(0,30))) }catch(e){} }
+var sessions = loadSessions(), cur = null;
+function newSession(){
+  cur = {id:Date.now(), ts:Date.now(), grade:state.grade, subject:state.subject, msgs:[]};
+  sessions.unshift(cur); saveSessions();
 }
-function pick(groupId,key){
-  document.querySelectorAll("#"+groupId+" .chip").forEach(function(c){
-    c.addEventListener("click",function(){
-      document.querySelectorAll("#"+groupId+" .chip").forEach(function(x){x.classList.remove("on")});
-      c.classList.add("on"); state[key]=c.dataset.v; validate();
+function logMsg(w,t){ if(!cur||!t) return; cur.msgs.push({w:w,t:t}); saveSessions() }
+
+function fmt(ts){ try{ return new Date(ts).toLocaleString("uk-UA",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}) }catch(e){ return "" } }
+function renderHistory(){
+  var box=$("hist-list"); box.innerHTML="";
+  var list=sessions.filter(function(s){return s.msgs.length});
+  $("hist-clear").classList.toggle("hidden",!list.length);
+  if(!list.length){
+    box.innerHTML='<div class="empty"><span>🕘</span>Поки що немає діалогів.<br>Вони з\'являться після першої розмови з тьютором.</div>';
+    return;
+  }
+  list.forEach(function(s){
+    var d=document.createElement("details"); d.className="hs";
+    var sm=document.createElement("summary");
+    sm.textContent=s.subject+" · "+s.grade+" клас";
+    var sub=document.createElement("small"); sub.textContent=fmt(s.ts)+" · повідомлень: "+s.msgs.length;
+    sm.appendChild(sub); d.appendChild(sm);
+    var w=document.createElement("div"); w.className="hmsgs";
+    s.msgs.forEach(function(m){
+      var b=document.createElement("div"); b.className="m "+m.w; b.textContent=m.t; w.appendChild(b);
     });
+    d.appendChild(w); box.appendChild(d);
   });
 }
-function validate(){ $("start").disabled = !(state.name.trim() && state.grade && state.subject) }
-$("name").addEventListener("input",function(e){state.name=e.target.value;validate()});
-pick("grade","grade"); pick("subject","subject");
+$("hist-clear").addEventListener("click",function(){
+  if(!confirm("Видалити всі збережені діалоги в цьому браузері?")) return;
+  sessions=[]; cur=null; saveSessions(); if(started){ newSession() } renderHistory();
+});
 
-/* ----- Tidio (віджет завантажується після натискання «Почати») ----- */
-var chatStarted=false;
+/* ----- конспекти ----- */
+function renderNotes(){
+  var box=$("notes-list"); box.innerHTML="";
+  var g=parseInt(state.grade||"9",10);
+  var all=NOTES[state.subject]||[];
+  var list=all.filter(function(n){return n.g<=g});
+  $("notes-sub").textContent=(state.subject||"Предмет")+" · "+g+" клас. Теми підібрано під обраний клас.";
+  if(!list.length){
+    box.innerHTML='<div class="empty"><span>📚</span>Конспекти для цього предмета й класу ще готуються.<br>Напиши тему тьютору в чаті, і тьютор її пояснить.</div>';
+    return;
+  }
+  list.forEach(function(n){
+    var d=document.createElement("details");
+    d.innerHTML='<summary></summary>'+n.h;
+    d.querySelector("summary").textContent=n.t;
+    box.appendChild(d);
+  });
+}
+
+/* ----- Tidio ----- */
 function openTidio(){
   var api=window.tidioChatApi; if(!api) return;
-  try{ api.setVisitorData({name:state.name+" ("+state.grade+", "+state.subject+")"}) }catch(e){}
+  try{ api.setVisitorData({name:state.name+" ("+state.grade+" клас, "+state.subject+")"}) }catch(e){}
   api.show(); api.open();
 }
 function onTidioReady(){
-  if(chatStarted){ openTidio() } else { try{ window.tidioChatApi.hide() }catch(e){} }
+  if(started){ openTidio() } else { try{ window.tidioChatApi.hide() }catch(e){} }
 }
 if(window.tidioChatApi){ onTidioReady() } else { document.addEventListener("tidioChat-ready",onTidioReady,{once:true}) }
-function loadTidio(){ chatStarted=true; openTidio(); }
+function tmsg(e){ var m=e&&e.detail&&e.detail.message; return typeof m==="string" ? m : (m&&m.message)||"" }
+document.addEventListener("tidioChat-messageFromVisitor",function(e){ logMsg("me",tmsg(e)) });
+document.addEventListener("tidioChat-messageFromOperator",function(e){ logMsg("bot",tmsg(e)) });
+
+/* ----- навігація ----- */
+function show(s){
+  ["home","chat","history","notes","progress"].forEach(function(x){$("s-"+x).classList.toggle("active",x===s)});
+  document.querySelectorAll("#nav button").forEach(function(b){b.classList.toggle("on",b.dataset.s===s)});
+  var comp=$("composer"); if(comp) comp.classList.toggle("hidden",s!=="chat");
+  if(s==="history") renderHistory();
+  if(s==="notes") renderNotes();
+  if(liveChat && window.tidioChatApi && started){
+    if(s==="chat"){ tidioChatApi.show(); tidioChatApi.open() }
+    else { try{tidioChatApi.close();tidioChatApi.hide()}catch(e){} }
+  }
+}
+document.querySelectorAll("#nav button").forEach(function(b){
+  b.addEventListener("click",function(){ show(b.dataset.s) });
+});
+
+/* ----- форма на головній ----- */
+function validate(){ $("start").disabled = !(state.name.trim() && state.grade && state.subject) }
+$("name").addEventListener("input",function(e){state.name=e.target.value;validate()});
+$("grade").addEventListener("change",function(e){state.grade=e.target.value;validate()});
+$("subject").addEventListener("change",function(e){state.subject=e.target.value;validate()});
+
+/* ----- зміна класу/предмета вже в застосунку ----- */
+function onContextChange(){
+  state.grade=$("ctx-grade").value; state.subject=$("ctx-subj").value;
+  newSession();
+  if(!liveChat){
+    $("msgs").innerHTML="";
+    greet();
+  } else {
+    try{ window.tidioChatApi && tidioChatApi.setVisitorData({name:state.name+" ("+state.grade+" клас, "+state.subject+")"}) }catch(e){}
+  }
+  renderNotes();
+}
+$("ctx-grade").addEventListener("change",onContextChange);
+$("ctx-subj").addEventListener("change",onContextChange);
 
 /* ----- Clarity ----- */
 if(CLARITY_ID){
@@ -252,7 +419,7 @@ if(CLARITY_ID){
 function openLb(src){ $("lb").querySelector("img").src=src; $("lb").classList.add("on") }
 $("lb").addEventListener("click",function(){ $("lb").classList.remove("on") });
 
-/* ----- зображення: стискаємо до 1280px, JPEG ----- */
+/* ----- зображення ----- */
 function shrink(file,cb){
   var fr=new FileReader();
   fr.onload=function(){
@@ -269,7 +436,7 @@ function shrink(file,cb){
   fr.readAsDataURL(file);
 }
 function renderPreview(){
-  var p=$("preview"); p.innerHTML="";
+  var p=$("preview"); if(!p) return; p.innerHTML="";
   pending.forEach(function(src,i){
     var t=document.createElement("div"); t.className="thumb";
     t.innerHTML='<img alt=""><button aria-label="Прибрати">✕</button>';
@@ -280,15 +447,20 @@ function renderPreview(){
   p.classList.toggle("hidden",!pending.length);
 }
 
-/* ----- демо-чат (коли Tawk не підключено) ----- */
-function addMsg(text,who,imgs){
+/* ----- демо-чат ----- */
+function addMsg(text,who,imgs,nolog){
   var d=document.createElement("div"); d.className="m "+who;
   (imgs||[]).forEach(function(src){
     var im=document.createElement("img"); im.src=src; im.alt="Додане зображення";
     im.onclick=function(){openLb(src)}; d.appendChild(im);
   });
   if(text){ var s=document.createElement("span"); s.textContent=text; d.appendChild(s) }
-  $("msgs").appendChild(d); $("msgs").scrollTop=1e9; return d;
+  $("msgs").appendChild(d); $("msgs").scrollTop=1e9;
+  if(!nolog) logMsg(who, (text||"")+((imgs&&imgs.length)?" [фото: "+imgs.length+"]":""));
+  return d;
+}
+function greet(){
+  addMsg("Привіт, "+state.name.trim()+"! 👋 Я тьютор EduMind. Предмет: «"+state.subject+"», "+state.grade+" клас.\n\nНадішли завдання, яке не виходить (текстом або фото), і свою відповідь. Я поясню, де помилка, у форматі НМТ.","bot");
 }
 function buildComposer(){
   var c=document.createElement("div"); c.className="composer"; c.id="composer";
@@ -300,7 +472,7 @@ function buildComposer(){
       '<input type="text" id="inp" placeholder="Напиши завдання або додай фото…">'+
       '<button class="send" id="sendb" aria-label="Надіслати">➤</button>'+
     '</div>';
-  $("app").insertBefore(c,$("nav"));
+  $("app").appendChild(c);
   $("photo").onclick=function(){$("file").click()};
   $("file").addEventListener("change",function(e){
     Array.prototype.forEach.call(e.target.files,function(f){
@@ -329,24 +501,21 @@ function buildComposer(){
 
 /* ----- старт ----- */
 $("start").addEventListener("click",function(){
-  $("nav").classList.remove("hidden");
+  started=true;
+  $("nav").classList.remove("hidden"); $("ctx").classList.remove("hidden");
+  $("ctx-grade").value=state.grade; $("ctx-subj").value=state.subject;
+  newSession();
   show("chat");
   if(liveChat){
     $("msgs").classList.add("hidden"); $("tawk-box").classList.remove("hidden");
-    loadTidio();
+    openTidio();
   } else {
     $("demo").classList.remove("hidden");
     buildComposer();
-    addMsg("Привіт, "+state.name.trim()+"! 👋 Я тьютор EduMind з предмета «"+state.subject+"».\n\nНадішли завдання, яке не виходить (текстом або фото), і свою відповідь. Я поясню, де помилка, у форматі НМТ.","bot");
+    greet();
   }
 });
 $("reopen").addEventListener("click",function(){ if(window.tidioChatApi){tidioChatApi.show();tidioChatApi.open()} });
-document.querySelectorAll("nav button").forEach(function(b){
-  b.addEventListener("click",function(){
-    show(b.dataset.s);
-    var comp=$("composer"); if(comp) comp.classList.toggle("hidden",b.dataset.s!=="chat");
-  });
-});
 
 /* Картку прогресу оператор надсилає в чат як зображення;
    для скриншота у звіті можна вручну викликати: renderProgress([["Динаміка",3,10],["Кінематика",7,10]]) */
