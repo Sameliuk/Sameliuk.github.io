@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#4f46e5">
+<title>EduMind — AI-тьютор для НМТ</title>
+<style>
+  :root{
+    --brand:#4f46e5; --brand-dark:#3730a3; --accent:#14b8a6;
+    --bg:#f5f6fb; --card:#fff; --text:#1e1b3a; --muted:#6b7280; --line:#e5e7eb;
+    --ok:#16a34a; --warn:#f59e0b; --bad:#ef4444;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:#dfe3f3;color:var(--text);
+       display:flex;justify-content:center}
+  #app{width:100%;max-width:480px;height:100dvh;background:var(--bg);display:flex;flex-direction:column;
+       position:relative;overflow:hidden;box-shadow:0 0 40px rgba(30,27,58,.15)}
+  header{background:linear-gradient(135deg,var(--brand),var(--brand-dark));color:#fff;padding:14px 18px;
+         display:flex;align-items:center;gap:10px;flex-shrink:0}
+  .logo{width:34px;height:34px;border-radius:10px;background:#fff;color:var(--brand);font-weight:800;
+        display:grid;place-items:center;font-size:18px}
+  header h1{font-size:18px;font-weight:700;line-height:1.1}
+  header small{opacity:.85;font-size:12px}
+  .beta{margin-left:auto;background:rgba(255,255,255,.18);padding:3px 9px;border-radius:99px;font-size:11px;font-weight:600}
+  main{flex:1;overflow-y:auto;padding:18px}
+  .screen{display:none}.screen.active{display:block}
+  .hero h2{font-size:25px;line-height:1.2;margin-bottom:10px}
+  .hero p{color:var(--muted);font-size:15px;line-height:1.45}
+  .benefits{margin:18px 0;display:grid;gap:10px}
+  .benefit{background:var(--card);border-radius:14px;padding:12px 14px;display:flex;gap:12px;align-items:flex-start;
+           border:1px solid var(--line)}
+  .benefit span{font-size:22px}
+  .benefit b{display:block;font-size:14px;margin-bottom:2px}
+  .benefit div{font-size:13px;color:var(--muted);line-height:1.35}
+  .card{background:var(--card);border-radius:16px;padding:16px;border:1px solid var(--line)}
+  label{display:block;font-size:13px;font-weight:600;margin:12px 0 6px}
+  input[type=text]{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;font-size:16px;background:#fff}
+  input:focus{outline:2px solid var(--brand);outline-offset:-1px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{padding:9px 14px;border-radius:99px;border:1px solid var(--line);background:#fff;font-size:14px;cursor:pointer;user-select:none}
+  .chip.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+  .btn{width:100%;margin-top:16px;padding:14px;border:0;border-radius:14px;background:var(--brand);color:#fff;
+       font-size:16px;font-weight:700;cursor:pointer}
+  .btn:disabled{background:#c7c9e8;cursor:not-allowed}
+  .btn.sec{background:#fff;color:var(--brand);border:1px solid var(--brand);margin-top:10px}
+  .note{font-size:12px;color:var(--muted);text-align:center;margin-top:10px;line-height:1.4}
+  /* chat */
+  #chat{display:flex;flex-direction:column;height:100%}
+  .msgs{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding-bottom:8px}
+  .m{max-width:86%;padding:10px 13px;border-radius:16px;font-size:15px;line-height:1.4;white-space:pre-wrap;word-wrap:break-word}
+  .m.bot{background:#fff;border:1px solid var(--line);border-bottom-left-radius:4px;align-self:flex-start}
+  .m.me{background:var(--brand);color:#fff;border-bottom-right-radius:4px;align-self:flex-end}
+  .typing{align-self:flex-start;color:var(--muted);font-size:13px;padding:2px 6px}
+  .demo{background:#fef3c7;color:#92400e;font-size:12px;padding:8px 12px;border-radius:10px;margin-bottom:10px;line-height:1.35}
+  .composer{display:flex;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:#fff;border-top:1px solid var(--line);flex-shrink:0}
+  .composer input{flex:1;border-radius:99px}
+  .send{width:46px;border:0;border-radius:50%;background:var(--brand);color:#fff;font-size:18px;cursor:pointer}
+  .ph{width:46px;border:1px solid var(--line);border-radius:50%;background:#fff;font-size:18px;cursor:pointer}
+  /* progress */
+  .topic{margin:12px 0}
+  .topic .row{display:flex;justify-content:space-between;font-size:14px;margin-bottom:5px}
+  .bar{height:9px;border-radius:99px;background:#eceef7;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:99px}
+  .tag{font-size:12px;font-weight:600}
+  nav{display:flex;background:#fff;border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);flex-shrink:0}
+  nav button{flex:1;padding:11px 4px 9px;border:0;background:none;font-size:12px;color:var(--muted);cursor:pointer}
+  nav button span{display:block;font-size:20px;margin-bottom:1px}
+  nav button.on{color:var(--brand);font-weight:700}
+  .empty{text-align:center;color:var(--muted);padding:36px 12px;font-size:14px;line-height:1.5}
+  .empty span{font-size:42px;display:block;margin-bottom:8px}
+  .hidden{display:none!important}
+  details{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 14px;margin-top:8px;font-size:14px}
+  summary{font-weight:600;cursor:pointer}
+  details p{color:var(--muted);margin-top:7px;line-height:1.4;font-size:13px}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="logo">E</div>
+    <div><h1>EduMind</h1><small>AI-тьютор для НМТ</small></div>
+    <div class="beta">бета-тест</div>
+  </header>
+
+  <main id="main">
+    <!-- 1. ГОЛОВНА / ОНБОРДИНГ -->
+    <section class="screen active" id="s-home">
+      <div class="hero">
+        <h2>Дізнайся свій реальний рівень готовності до НМТ</h2>
+        <p>AI-діагностика прогалин і пояснення на вимогу у форматі іспиту. Безкоштовно, без реєстрації та картки.</p>
+      </div>
+      <div class="benefits">
+        <div class="benefit"><span>📊</span><div><b>Рівень по темах, а не просто відсоток</b>Бачиш, де сильний, а де слабкий</div></div>
+        <div class="benefit"><span>💡</span><div><b>Пояснення у форматі НМТ</b>Розбір логіки помилки з першого разу, без перемикання між джерелами</div></div>
+        <div class="benefit"><span>⏱️</span><div><b>Відповідь за кілька хвилин</b>Без розкладу, коли зручно тобі</div></div>
+      </div>
+      <div class="card">
+        <label for="name">Як тебе звати?</label>
+        <input type="text" id="name" placeholder="Ім'я" autocomplete="given-name">
+        <label>Клас</label>
+        <div class="chips" id="grade">
+          <div class="chip" data-v="10">10 клас</div>
+          <div class="chip" data-v="11">11 клас</div>
+          <div class="chip" data-v="випускник">Випускник</div>
+        </div>
+        <label>З якого предмета почнемо?</label>
+        <div class="chips" id="subject">
+          <div class="chip" data-v="Фізика">Фізика</div>
+          <div class="chip" data-v="Математика">Математика</div>
+        </div>
+        <button class="btn" id="start" disabled>Почати безкоштовно</button>
+        <p class="note">Без реєстрації · Без картки · Працює з телефону</p>
+      </div>
+    </section>
+
+    <!-- 2. ЧАТ -->
+    <section class="screen" id="s-chat" style="height:100%">
+      <div id="chat">
+        <div class="demo hidden" id="demo">Демо-режим: чат оператора не підключено (див. TAWK_ID у коді). Повідомлення нікуди не надсилаються.</div>
+        <div class="msgs" id="msgs"></div>
+        <div id="tawk-box" class="hidden">
+          <div class="empty"><span>💬</span>Чат тьютора відкрито.<br>Надішли завдання й свою відповідь, а я розберу помилку.
+            <button class="btn" id="reopen">Відкрити чат</button></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. ПРОГРЕС -->
+    <section class="screen" id="s-progress">
+      <h2 style="font-size:20px;margin-bottom:4px">Мій прогрес</h2>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:12px">Картка оновлюється після кожних 5–10 завдань.</p>
+      <div class="card" id="progress-card">
+        <div class="empty"><span>📈</span>Тут з'явиться карта твоїх тем,<br>коли розв'яжеш перші завдання.</div>
+      </div>
+      <details><summary>Як це працює?</summary><p>Надсилаєш завдання, яке не виходить, і свою відповідь. Тьютор пояснює, де помилка, і дає схоже завдання. Після кількох завдань ти бачиш сильні й слабкі теми.</p></details>
+      <details><summary>Це безкоштовно?</summary><p>Діагностика й перші пояснення безкоштовні, без реєстрації й картки.</p></details>
+      <details><summary>Мої дані в безпеці?</summary><p>Ми зберігаємо лише ім'я, клас і твої завдання для дослідження. Ніяких оплат і даних батьків.</p></details>
+    </section>
+  </main>
+
+  <nav id="nav" class="hidden">
+    <button data-s="chat" class="on"><span>💬</span>Тьютор</button>
+    <button data-s="progress"><span>📊</span>Прогрес</button>
+  </nav>
+</div>
+
+<script>
+/* ===== НАЛАШТУВАННЯ (заповніть після реєстрації сервісів) ===== */
+// Tawk.to: Administration → Channels → Chat Widget → Direct Chat Link: tawk.to/chat/PROPERTY_ID/WIDGET_ID
+var TAWK_PROPERTY_ID = "";   // наприклад "65f1a2b3c4d5e6f7a8b9c0d1"
+var TAWK_WIDGET_ID   = "";   // наприклад "1hq2w3e4r"
+// Microsoft Clarity: Project ID (необов'язково)
+var CLARITY_ID = "";
+/* ============================================================== */
+
+var state = {name:"",grade:"",subject:""};
+var tawkOn = !!(TAWK_PROPERTY_ID && TAWK_WIDGET_ID);
+
+function $(id){return document.getElementById(id)}
+function show(s){
+  ["home","chat","progress"].forEach(function(x){$("s-"+x).classList.toggle("active",x===s)});
+  document.querySelectorAll("nav button").forEach(function(b){b.classList.toggle("on",b.dataset.s===s)});
+  if(s==="chat" && tawkOn && window.Tawk_API && Tawk_API.maximize){Tawk_API.maximize()}
+  if(s!=="chat" && tawkOn && window.Tawk_API && Tawk_API.minimize){Tawk_API.minimize()}
+}
+function pick(groupId,key){
+  document.querySelectorAll("#"+groupId+" .chip").forEach(function(c){
+    c.addEventListener("click",function(){
+      document.querySelectorAll("#"+groupId+" .chip").forEach(function(x){x.classList.remove("on")});
+      c.classList.add("on"); state[key]=c.dataset.v; validate();
+    });
+  });
+}
+function validate(){ $("start").disabled = !(state.name.trim() && state.grade && state.subject) }
+$("name").addEventListener("input",function(e){state.name=e.target.value;validate()});
+pick("grade","grade"); pick("subject","subject");
+
+/* ----- Tawk.to ----- */
+function loadTawk(){
+  window.Tawk_API = window.Tawk_API || {}; window.Tawk_LoadStart = new Date();
+  Tawk_API.onLoad = function(){
+    Tawk_API.setAttributes({name:state.name+" ("+state.grade+", "+state.subject+")"},function(){});
+    Tawk_API.maximize();
+  };
+  Tawk_API.customStyle = {visibility:{desktop:{position:"br",xOffset:20,yOffset:20},mobile:{position:"br",xOffset:0,yOffset:0}}};
+  var s=document.createElement("script"); s.async=true;
+  s.src="https://embed.tawk.to/"+TAWK_PROPERTY_ID+"/"+TAWK_WIDGET_ID;
+  s.charset="UTF-8"; s.setAttribute("crossorigin","*");
+  document.head.appendChild(s);
+}
+
+/* ----- Clarity ----- */
+if(CLARITY_ID){
+  (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+  t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+  y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script",CLARITY_ID);
+}
+
+/* ----- демо-чат (коли Tawk не підключено) ----- */
+function addMsg(text,who){
+  var d=document.createElement("div"); d.className="m "+who; d.textContent=text;
+  $("msgs").appendChild(d); $("msgs").scrollTop=1e9; return d;
+}
+function buildComposer(){
+  var c=document.createElement("div"); c.className="composer"; c.id="composer";
+  c.innerHTML='<button class="ph" id="photo" title="Фото">📷</button><input type="text" id="inp" placeholder="Напиши завдання і свою відповідь…"><button class="send" id="sendb">➤</button>';
+  $("app").insertBefore(c,$("nav"));
+  function send(){
+    var v=$("inp").value.trim(); if(!v) return;
+    addMsg(v,"me"); $("inp").value="";
+    var t=document.createElement("div"); t.className="typing"; t.textContent="Тьютор готує пояснення…";
+    $("msgs").appendChild(t);
+    setTimeout(function(){t.remove();addMsg("Дякую! Це демо-режим. У справжньому тесті тут з'явиться розбір твоєї помилки та схоже завдання НМТ.","bot")},1500);
+  }
+  $("sendb").onclick=send;
+  $("inp").addEventListener("keydown",function(e){if(e.key==="Enter")send()});
+  $("photo").onclick=function(){alert("У демо-режимі фото не надсилаються.")};
+}
+
+/* ----- старт ----- */
+$("start").addEventListener("click",function(){
+  $("nav").classList.remove("hidden");
+  show("chat");
+  if(tawkOn){
+    $("msgs").classList.add("hidden"); $("tawk-box").classList.remove("hidden");
+    loadTawk();
+  } else {
+    $("demo").classList.remove("hidden");
+    buildComposer();
+    addMsg("Привіт, "+state.name.trim()+"! 👋 Я тьютор EduMind з предмета «"+state.subject+"».\n\nНадішли завдання, яке не виходить, і свою відповідь. Я поясню, де помилка, у форматі НМТ.","bot");
+  }
+});
+$("reopen").addEventListener("click",function(){ if(window.Tawk_API&&Tawk_API.maximize) Tawk_API.maximize() });
+document.querySelectorAll("nav button").forEach(function(b){
+  b.addEventListener("click",function(){
+    show(b.dataset.s);
+    var comp=$("composer"); if(comp) comp.classList.toggle("hidden",b.dataset.s!=="chat");
+  });
+});
+
+/* Картку прогресу оператор надсилає в чат як зображення;
+   для скриншота у звіті можна вручну викликати: renderProgress([["Динаміка",3,10],["Кінематика",7,10]]) */
+function renderProgress(rows){
+  var h="";
+  rows.forEach(function(r){
+    var p=Math.round(r[1]/r[2]*100), col=p>=70?"var(--ok)":p>=40?"var(--warn)":"var(--bad)", tag=p>=70?"сильна":p>=40?"середня":"слабка";
+    h+='<div class="topic"><div class="row"><span>'+r[0]+'</span><span class="tag" style="color:'+col+'">'+r[1]+'/'+r[2]+' · '+tag+'</span></div><div class="bar"><i style="width:'+p+'%;background:'+col+'"></i></div></div>';
+  });
+  h+='<p class="note" style="text-align:left;margin-top:12px">Почни зі слабкої теми — це дасть найбільший приріст.</p>';
+  $("progress-card").innerHTML=h;
+}
+</script>
+</body>
+</html>
