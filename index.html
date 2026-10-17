@@ -266,13 +266,94 @@ var NOTES = {
   {g:10,t:"Умовні речення",h:"<ul><li>Zero: If + present, present</li><li>First: If + present, <b>will</b> + inf</li><li>Second: If + past, <b>would</b> + inf</li><li>Third: If + past perfect, <b>would have</b> + V3</li></ul>"}
  ],
  "Біологія":[
-  {g:9,t:"Фотосинтез і дихання",h:"<ul><li>Фотосинтез (хлоропласти, світло): <b>6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂</b></li><li>Клітинне дихання (мітохондрії): <b>C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + АТФ</b></li></ul>"}
+  {g:9,t:"Фотосинтез і дихання",h:"<ul><li>Фотосинтез (хлоропласти, світло): <b>6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂</b></li><li>Клітинне дихання (мітохондрії): <b>C₆H₁₂O₆ + 6O₂ → 6CO₂ + 6H₂O + АТФ</b></li></ul>"},
+  {g:9,t:"Будова клітини",h:"<ul><li><b>Ядро</b> — зберігає ДНК, керує клітиною</li><li><b>Мітохондрії</b> — «енергостанції», клітинне дихання</li><li><b>Рибосоми</b> — синтез білків</li><li><b>Клітинна мембрана</b> — контролює обмін речовин</li></ul>"}
  ],
  "Хімія":[
-  {g:9,t:"Моль і кількість речовини",h:"<ul><li><b>n = m / M</b></li><li><b>N = n·N_A</b>, N_A ≈ 6,02·10²³ моль⁻¹</li><li>Гази (н. у.): <b>V = n·V_m</b>, V_m = 22,4 л/моль</li></ul>"}
+  {g:9,t:"Моль і кількість речовини",h:"<ul><li><b>n = m / M</b></li><li><b>N = n·N_A</b>, N_A ≈ 6,02·10²³ моль⁻¹</li><li>Гази (н. у.): <b>V = n·V_m</b>, V_m = 22,4 л/моль</li></ul>"},
+  {g:9,t:"Основні класи неорганічних сполук",h:"<ul><li><b>Оксиди</b> — елемент + кисень (CaO, CO₂)</li><li><b>Основи</b> — метал + OH (NaOH)</li><li><b>Кислоти</b> — H + кислотний залишок (HCl, H₂SO₄)</li><li><b>Солі</b> — метал + кислотний залишок (NaCl)</li></ul>"}
  ],
- "Географія":[]
+ "Географія":[
+  {g:9,t:"Географічні координати",h:"<ul><li><b>Широта</b> — відстань від екватора (0°–90°, пн./пд.)</li><li><b>Довгота</b> — відстань від Гринвіцького меридіана (0°–180°, сх./зх.)</li><li>Записується: спочатку широта, потім довгота</li></ul>"},
+  {g:9,t:"Клімат України",h:"<ul><li>Україна — у помірному кліматичному поясі</li><li>Переважає <b>помірно континентальний клімат</b>, на півдні Криму — субтропічний</li><li>Опади зменшуються зі заходу на схід і з півночі на південь</li></ul>"}
+ ]
 };
+
+/* Демо-прогрес для вкладки «Прогрес»: приклад даних, щоб було що показати без реального проходження завдань.
+   g — з якого класу тема враховується (та сама логіка фільтрації, що й для конспектів). */
+var DEMO_PROGRESS = {
+ "Фізика":[
+  {g:9,t:"Рух і прискорення",done:7,total:10},
+  {g:9,t:"Закони Ньютона",done:5,total:10},
+  {g:9,t:"Робота, енергія, потужність",done:9,total:10},
+  {g:9,t:"Закон Ома й електричні кола",done:4,total:10},
+  {g:10,t:"Газові закони",done:6,total:10},
+  {g:10,t:"Закон Кулона",done:8,total:10}
+ ],
+ "Математика":[
+  {g:9,t:"Квадратні рівняння",done:6,total:10},
+  {g:9,t:"Прогресії",done:8,total:10},
+  {g:9,t:"Теорема Піфагора, площі",done:4,total:10},
+  {g:10,t:"Тригонометрія",done:5,total:10},
+  {g:10,t:"Логарифми",done:7,total:10},
+  {g:11,t:"Похідна",done:3,total:10}
+ ],
+ "Українська мова":[
+  {g:9,t:"Апостроф",done:9,total:10},
+  {g:9,t:"Правопис «не»",done:6,total:10}
+ ],
+ "Історія України":[
+  {g:9,t:"Київська Русь",done:8,total:10},
+  {g:10,t:"Українська революція 1917–1921",done:5,total:10},
+  {g:11,t:"Незалежність України",done:7,total:10}
+ ],
+ "Англійська мова":[
+  {g:9,t:"Основні часи",done:6,total:10},
+  {g:10,t:"Умовні речення",done:4,total:10}
+ ],
+ "Біологія":[
+  {g:9,t:"Фотосинтез і дихання",done:7,total:10},
+  {g:9,t:"Будова клітини",done:5,total:10}
+ ],
+ "Хімія":[
+  {g:9,t:"Моль і кількість речовини",done:5,total:10},
+  {g:9,t:"Основні класи неорганічних сполук",done:6,total:10}
+ ],
+ "Географія":[
+  {g:9,t:"Географічні координати",done:6,total:10},
+  {g:9,t:"Клімат України",done:4,total:10}
+ ]
+};
+
+/* Демо-розмови для вкладки «Історія»: приклади діалогів тьютора, щоб було що подивитись одразу,
+   без потреби спершу щось написати в чат. */
+var DEMO_SESSIONS = [
+ {name:"Олег", grade:"11", subject:"Математика", daysAgo:2, msgs:[
+   {w:"bot", t:"Привіт, Олеже! 👋 Я тьютор EduMind. Предмет: «Математика», 11 клас.\n\nНадішли завдання, яке не виходить (текстом або фото), і свою відповідь. Я поясню, де помилка, у форматі НМТ."},
+   {w:"me", t:"Знайди похідну f(x)=x^3-2x, я отримав f'(x)=3x^2-2x, це правильно?"},
+   {w:"bot", t:"Майже! Помилка в похідній другого доданка: (−2x)' = −2, а не −2x — похідна лінійного члена це просто коефіцієнт при x. Правильна відповідь: f'(x) = 3x² − 2.\n\nСхоже завдання НМТ: знайди похідну g(x) = 5x² + 3x − 7."}
+ ]},
+ {name:"Марина", grade:"11", subject:"Математика", daysAgo:1, msgs:[
+   {w:"bot", t:"З поверненням, Марино! Продовжимо «Математика», 11 клас."},
+   {w:"me", t:"Не розумію, чому в x^2-4x+3=0 корені 1 і 3, а не 1 і -3"},
+   {w:"bot", t:"За теоремою Вієта: x₁·x₂ = c/a = 3, а x₁+x₂ = -b/a = 4. Якщо взяти -3: 1·(-3) = -3 ≠ 3 — не підходить. А 1·3 = 3 і 1+3 = 4 — все збігається. Тому корені саме 1 і 3."}
+ ]},
+ {name:"Анастасія", grade:"9", subject:"Фізика", daysAgo:3, msgs:[
+   {w:"bot", t:"Привіт, Насте! 👋 Я тьютор EduMind. Предмет: «Фізика», 9 клас."},
+   {w:"me", t:"Тіло рухається з прискоренням 2 м/с², початкова швидкість 3 м/с. Яка швидкість через 5 с? Я порахувала 10 м/с"},
+   {w:"bot", t:"Перевіримо за формулою v = v₀ + at: v = 3 + 2·5 = 13 м/с. Здається, ти забула додати початкову швидкість v₀ = 3 м/с. Правильна відповідь — 13 м/с.\n\nСхоже завдання: тіло рухається з v₀ = 5 м/с і прискоренням 1,5 м/с². Яка швидкість через 4 с?"}
+ ]},
+ {name:"Віктор", grade:"11", subject:"Історія України", daysAgo:4, msgs:[
+   {w:"bot", t:"Привіт, Вікторе! Предмет: «Історія України», 11 клас."},
+   {w:"me", t:"В якому році був Акт Злуки УНР і ЗУНР?"},
+   {w:"bot", t:"22 січня 1919 року. Легко запам'ятати: рівно роком раніше, 22 січня 1918-го, був проголошений IV Універсал про незалежність УНР — обидві ключові дати об'єднання збігаються по числах."}
+ ]},
+ {name:"Артем", grade:"10", subject:"Математика", daysAgo:5, msgs:[
+   {w:"bot", t:"Привіт, Артеме! 👋 Я тьютор EduMind. Предмет: «Математика», 10 клас."},
+   {w:"me", t:"Не розумію з чого почати тему тригонометрії взагалі"},
+   {w:"bot", t:"Почнемо з головної формули: sin²x + cos²x = 1 — вона працює для будь-якого кута. Запам'ятай ще значення для 30°, 45°, 60° — вони зустрічаються в НМТ найчастіше. Надішли перше завдання з тригонометрії, яке в тебе є — розберемо разом крок за кроком."}
+ ]}
+];
 
 var state = {name:"",grade:"",subject:""};
 var liveChat = !!TIDIO_KEY;
@@ -305,6 +386,27 @@ SUBJECTS.forEach(function(s){
 function loadSessions(){ try{ return JSON.parse(localStorage.getItem("edumind-sessions")||"[]") }catch(e){ return [] } }
 function saveSessions(){ try{ localStorage.setItem("edumind-sessions",JSON.stringify(sessions.slice(0,30))) }catch(e){} }
 var sessions = loadSessions(), cur = null;
+
+/* Засіваємо приклади розмов лише якщо в цьому браузері ще немає жодної історії —
+   щоб вкладку «Історія» було що показати одразу, і щоб не затирати реальні діалоги користувача. */
+function seedDemoSessions(){
+  if(sessions.length) return;
+  var now = Date.now();
+  DEMO_SESSIONS.forEach(function(d,i){
+    sessions.push({
+      id: now - i - 1,
+      ts: now - d.daysAgo*86400000,
+      grade: d.grade,
+      subject: d.subject,
+      name: d.name,
+      msgs: d.msgs,
+      demo: true
+    });
+  });
+  saveSessions();
+}
+seedDemoSessions();
+
 function newSession(){
   cur = {id:Date.now(), ts:Date.now(), grade:state.grade, subject:state.subject, msgs:[]};
   sessions.unshift(cur); saveSessions();
@@ -323,7 +425,7 @@ function renderHistory(){
   list.forEach(function(s){
     var d=document.createElement("details"); d.className="hs";
     var sm=document.createElement("summary");
-    sm.textContent=s.subject+" · "+s.grade+" клас";
+    sm.textContent=s.subject+" · "+s.grade+" клас"+(s.demo?" · приклад":"");
     var sub=document.createElement("small"); sub.textContent=fmt(s.ts)+" · повідомлень: "+s.msgs.length;
     sm.appendChild(sub); d.appendChild(sm);
     var w=document.createElement("div"); w.className="hmsgs";
@@ -357,6 +459,28 @@ function renderNotes(){
   });
 }
 
+/* ----- прогрес ----- */
+/* Показує приклад карти прогресу для поточних класу/предмета (DEMO_PROGRESS).
+   Реальні дані в цьому прототипі не рахуються автоматично — оператор формує картку
+   вручну за ходом Concierge/Wizard-of-Oz сценарію (див. renderProgress нижче),
+   а ця функція лише дає побачити, як це виглядає, без проходження завдань. */
+function renderProgressView(){
+  var g=parseInt(state.grade||"9",10);
+  var list=(DEMO_PROGRESS[state.subject]||[]).filter(function(r){return r.g<=g});
+  var card=$("progress-card");
+  if(!list.length){
+    card.innerHTML='<div class="empty"><span>📈</span>Тут з\'явиться карта твоїх тем,<br>коли розв\'яжеш перші завдання.</div>';
+    return;
+  }
+  var h='<p class="note" style="text-align:left;margin-bottom:12px">Приклад для демонстрації — '+state.subject+', '+g+' клас. Твої реальні дані з\'являться після перших завдань.</p>';
+  list.forEach(function(r){
+    var p=Math.round(r.done/r.total*100), col=p>=70?"var(--ok)":p>=40?"var(--warn)":"var(--bad)", tag=p>=70?"сильна":p>=40?"середня":"слабка";
+    h+='<div class="topic"><div class="row"><span>'+r.t+'</span><span class="tag" style="color:'+col+'">'+r.done+'/'+r.total+' · '+tag+'</span></div><div class="bar"><i style="width:'+p+'%;background:'+col+'"></i></div></div>';
+  });
+  h+='<p class="note" style="text-align:left;margin-top:12px">Почни зі слабкої теми — це дасть найбільший приріст.</p>';
+  card.innerHTML=h;
+}
+
 /* ----- Tidio ----- */
 function openTidio(){
   var api=window.tidioChatApi; if(!api) return;
@@ -378,6 +502,7 @@ function show(s){
   var comp=$("composer"); if(comp) comp.classList.toggle("hidden",s!=="chat");
   if(s==="history") renderHistory();
   if(s==="notes") renderNotes();
+  if(s==="progress") renderProgressView();
   if(liveChat && window.tidioChatApi && started){
     if(s==="chat"){ tidioChatApi.show(); tidioChatApi.open() }
     else { try{tidioChatApi.close();tidioChatApi.hide()}catch(e){} }
@@ -404,6 +529,7 @@ function onContextChange(){
     try{ window.tidioChatApi && tidioChatApi.setVisitorData({name:state.name+" ("+state.grade+" клас, "+state.subject+")"}) }catch(e){}
   }
   renderNotes();
+  renderProgressView();
 }
 $("ctx-grade").addEventListener("change",onContextChange);
 $("ctx-subj").addEventListener("change",onContextChange);
